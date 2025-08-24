@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const connectDB = require('./config/db');
 
 // Configuring .env file
 dotenv.config();
@@ -17,6 +18,9 @@ app.use(
         allowedHeaders: ["Content-Type", "Authorization"],
     }) 
 );
+
+// Connecting the Database
+connectDB();
 
 // Middleware to parse JSON content
 app.use(express.json());
