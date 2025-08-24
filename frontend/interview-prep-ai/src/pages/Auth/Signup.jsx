@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/Input";
+import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector";
+import { validateEmail } from "../../utils/helper";
 
 const Signup = ({ setCurrentPage }) => {
   const [profilePic, setProfilePic] = useState(null);
@@ -15,6 +17,37 @@ const Signup = ({ setCurrentPage }) => {
   // Handle SignUp Form Submit
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let profileImageUrl = "";
+
+    if(!fullName) {
+      setError("Please enter full name.");
+      return;
+    }
+
+    if(!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if(!password) {
+      setError("Please enter the password");
+      return;
+    }
+
+    setError("");
+
+    // Sign Up API Call
+
+    try {
+
+    } catch (error) {
+      if(error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    }
   };
 
   return (
@@ -25,6 +58,9 @@ const Signup = ({ setCurrentPage }) => {
       </p>
 
       <form onSubmit={handleSignUp}>
+
+        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2">
           <Input
             value={fullName}
@@ -37,7 +73,7 @@ const Signup = ({ setCurrentPage }) => {
           <Input
             value={email}
             onChange={({ target }) => setEmail(target.value)}
-            label="Eamil Address"
+            label="Email Address"
             placeholder="john@example.com"
             type="text"
           />
@@ -60,6 +96,7 @@ const Signup = ({ setCurrentPage }) => {
         <p className="text-[13px] text-slate-800 mt-3">
           Already have an account?{" "}
           <button
+            type="button"
             className="font-medium text-primary underline cursor-pointer"
             onClick={() => {
               setCurrentPage("login");
