@@ -51,7 +51,7 @@ const Login = ({ setCurrentPage }) => {
           <button
             className='font-medium text-primary underline cursor-pointer'
             onClick={() => {
-              setCurrentPage("signup");
+              setCurrentPage("Signup");
             }}
           >
             SignUp 
