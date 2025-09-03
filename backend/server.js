@@ -5,6 +5,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 
 const authRoutes = require("./routes/authRoutes");
+const sessionRoutes = require("./routes/sessionRoutes");
 
 // Configuring .env file
 dotenv.config();
