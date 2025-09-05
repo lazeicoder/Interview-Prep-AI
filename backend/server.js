@@ -7,6 +7,8 @@ const connectDB = require('./config/db');
 const authRoutes = require("./routes/authRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 const questionRoutes = require("./routes/questionRoutes");
+const { generateInterviewQuestions, generateConceptExplanation } = require('./controllers/aiController');
+const { protect } = require('./middlewares/authMiddleware');
 
 // Configuring .env file
 dotenv.config();
@@ -34,8 +36,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/questions", questionRoutes);
 
-// app.use("/api/ai/generate-questions", protect, generateInterviewQuestions);
-// app.use('/api/ai/generate-explanations', protect, generateConceptExplanation);
+app.use("/api/ai/generate-questions", protect, generateInterviewQuestions);
+app.use('/api/ai/generate-explanations', protect, generateConceptExplanation);
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
